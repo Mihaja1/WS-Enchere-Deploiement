@@ -31,50 +31,6 @@ import com.example.enchere.service.ServiceEnchere;
 @RequestMapping("/pushnotification")
 public class NotificationController {
 
-    @Autowired
-    private EnchereRepository enchereRepository;
-
-    @Autowired
-    private NotificationsRepository notificationsRepository;
-
-    @Autowired
-    private OffreRepository offreRepository;
-
-    @Autowired
-    private EnchereVenduRepository enchereVenduRepository;
-
-    @Autowired
-    private ServiceEnchere services;
-
-    @Autowired
-    private TokenRepository tokenRepository;
-
-    public void isTokenExipered(String tokenValues) throws Exception {
-        try{
-            if( tokenValues.equals("null")){
-                throw new RessourceException(new ErrorRetour("Vous devez vous connecter",HttpStatus.BAD_REQUEST.value()));
-            }
-            Token token = tokenRepository.getToken(tokenValues);
-            token.bearerToken(token);
-        }
-        catch(Exception e){
-            throw e;
-        }
-    }
-
-    @PostMapping("/sendNotification/{tokenValues}")
-    public void sendNotification(@PathVariable String tokenValues)throws Exception
-    {
-        try{
-            isTokenExipered(tokenValues);
-            Token t = tokenRepository.getToken(tokenValues);
-            services.finEnchere(t.getIdUtilisateur());
-        }
-        catch(Exception e){
-            throw e;
-        }
-    }
-
     
 
 }
